@@ -3,19 +3,30 @@ import { Trash, Check } from "lucide-react";
 
 type TaskItemProps = {
   task: Task;
+
   onDelete: (id: string) => void;
+  onToggle: (id: string) => void;
 };
 
-export const TaskItem = ({ task, onDelete }: TaskItemProps) => {
+export const TaskItem = ({ task, onDelete, onToggle }: TaskItemProps) => {
   const handleDelete = () => {
     onDelete(task.id);
   };
+  const handleToggle = () => {
+    onToggle(task.id);
+  };
+
   return (
     <div className="w-full rounded-xl flex justify-between items-center hover:bg-[#F8FAF8] p-3 h-13">
       <div className="flex items-center gap-3 cursor-pointer">
-        <input type="checkbox" className="peer appearance-none w-5 h-5 rounded-full border-2 border-gray-400 checked:bg-green-600 checked:border-green-600" />
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={handleToggle}
+          className="peer appearance-none w-5 h-5 rounded-full border-2 border-gray-400 checked:bg-green-600 checked:border-green-600 "
+        />
 
-        <Check size={14} className="absolute ml-1 text-white opacity-0 peer-checked:opacity-100 pointer-events-none" />
+        <Check size={14} className="absolute ml-0.75 text-white opacity-0 peer-checked:opacity-100 pointer-events-none" />
 
         <div className="text-[#30483C] text-sm transition-all peer-checked:text-[#93A198] peer-checked:line-through">{task.title}</div>
       </div>
